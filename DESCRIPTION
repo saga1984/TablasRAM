@@ -1,0 +1,24 @@
+Package: TablasRAM
+Title: Obtiene Perfiles de genes RAM y los asocia con resultados de AST
+        además de patrones de antimicrobianos multiresistentes por AST.
+Version: 2.1.2
+Author: Santiago-Valentin-Galvan-Gordillo <galvangosv@gmail.com>
+Description: Importa un archivo de genes RAM y un archivo de resultados de pruebas de 
+        susceptibilidad a antimicrobianos (AST), los compara, obtiene perfiles RAM,
+        y petrones de antimicrobianos en aislados multiresistentes.
+        Cuenta correspondencias entre Genotipo-Fenotipo. 
+        Calcula sensibilidad y especificidad.
+        y devuelve IDs. Por categorias RAM.
+License: GPL-3
+Imports:
+    readxl,
+    stringr,
+    dplyr,
+    tidyr,
+    data.table,
+    ggplot2,
+    forcats
+Depends: R (>=  4.2.2)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
