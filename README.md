@@ -1,5 +1,5 @@
 # TablasRAM
-TablasRAM Importa un archivo de genes RAM y un archivo de resultados de pruebas de susceptibilidad a antimicrobianos (AST), los compara, obtiene perfiles de genes RAM y patrones de antimicrobianos en aislados multiresistentes. Cuenta correspondencias entre Genotipo-Fenotipo. Calcula sensibilidad y especificidad y devuelve IDs. Por categorias RAM
+TablasRAM Importa un archivo de genes RAM y un archivo de resultados de pruebas de susceptibilidad a antimicrobianos (AST), los compara, obtiene perfiles de genes RAM y patrones de antimicrobianos en aislados multiresistentes, aislados multiresistentes en Tabla e imagen. Cuenta correspondencias entre Genotipo-Fenotipo. Calcula sensibilidad y especificidad y devuelve IDs. Por categorias RAM
 
 ## Forma de correr las funciones de este paquete:     
 
