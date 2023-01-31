@@ -86,7 +86,7 @@ Total	53	99	152	Especificidad: 89.9, (89)/(99)	Sensibilidad: 118.87, (63)/(53)
 
 ### Grafica Multiresistencia
 
-![Multiresistencia][https://user-images.githubusercontent.com/113209694/215827673-a7dd7594-5284-4012-a786-4cbe955aab71.png]
+![Multiresistencia](https://user-images.githubusercontent.com/113209694/215827673-a7dd7594-5284-4012-a786-4cbe955aab71.png)
 
 
 
