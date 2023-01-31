@@ -53,3 +53,42 @@ Senftenberg	33.33333333	66.66666667	3	ID18	ID99,ID34
 ### Patrones_Antimicrobianos     
 Patrones_Antimicrobianos	Conteo	ID     
 CHL-TET-AMI-GEN-LVX	2	ID57,ID58    
+GEN-CHL-CIP	1	ID51
+GEN-TAZ-CHL-CIP	1	ID33
+TOTAL	64	
+
+### Perfil_Genes_RAM_Aminoglucosidos 
+Perfil	No_Aislados	Genotipo_Total
+aac(3)-IId,aph(3')-Ia	1	
+aadA1	2	
+aadA1,aph(4)-Ia,aac(3)-IV	21	
+aadA1,aph(4)-Ia,aac(3)-IV,aph(3')-Ia	17	
+aadA2	4	
+aadA2,aadA2b,aph(4)-Ia,aac(3)-IV	1	
+aadA2b	1	
+aadA5,aadA7	1	
+aph(3'')-Ib	1	
+aph(3'')-Ib,aadA1,aph(6)-Id	1	
+aph(4)-Ia,aac(3)-IV	4	
+aph(4)-Ia,aac(3)-IV,aadA1,aadA2b	1	
+aph(6)-Id,aph(3'')-Ib	8	63
+Sin_Gen	89	89
+Total	152	152
+
+### Tabla_Genotipo_Fenotipo
+Perfil	AST_Resistentes	AST_Susceptibles	Genotipo_Total	ID_AST_Resistentes	ID_AST_Susceptibles
+aac(3)-IId,aph(3')-Ia	1	0		ID72	NA
+aadA1	0	2		NA	ID43,ID87
+aph(4)-Ia,aac(3)-IV,aadA1,aadA2b	1	0		ID34	NA
+aph(6)-Id,aph(3'')-Ib	1	7	63	ID59	ID97,ID06,ID08,ID22,ID97,ID21,ID25
+Total	53	99	152	Especificidad: 89.9, (89)/(99)	Sensibilidad: 118.87, (63)/(53)
+
+
+Grafica Multiresistencia
+
+file:///home/senasica2/Documentos/2023/RESPALDO_SVGG/PVRAM_FINAL/Multiresistencia.jpg![imagen](https://user-images.githubusercontent.com/113209694/215827673-a7dd7594-5284-4012-a786-4cbe955aab71.png)
+
+
+
+
+
