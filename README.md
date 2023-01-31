@@ -34,7 +34,7 @@ Ceftazidima ~ Betalactamicos
 Ciprofloxacino ~ Quinolonas      
 Cloranfenicol ~ Fenicoles     
 Colistina ~ Polimixinas     
-Ertapenem ~ Betalactamicos.....
+Ertapenem ~ Betalactamicos     
 Gentamicina ~ Aminoglucosidos     
 Imipenem ~ Imipenem    
 Levofloxacino ~ Quinolonas    
@@ -44,12 +44,13 @@ Tigeciclina" ~ "Tetraciclinas
 
 ## Archivos de salida:    
 ### Tabla_Multiresistencia    
-  Serotipo	R1	R3	Total	ID_R1	ID_R3    
-Hadar	0	100	2		ID01,ID02    
-Newport	0	100	1		ID14    
-Thompson	0	100	1		ID61    
-Albany	20	80	5	ID11	ID97,ID97,ID25,ID59    
-Senftenberg	33.33333333	66.66666667	3	ID18	ID99,ID34    
+Serotipo	 | R1 | R3	| Total |	ID_R1 |	ID_R3               |    
+-----------|----|-----|-------|-------|---------------------|
+Hadar	     |0	  |100	|2      |	      |ID01,ID02            |   
+Newport	   |0   |100  |1      |		    |ID14                 |
+Thompson	 |0   |100  |1      |		    |ID61                 |    
+Albany	   |20  |80   |5      |ID11   |ID97,ID97,ID25,ID59  |
+Senftenberg|33.3|66.67|3      |ID18   |ID99,ID34            |    
 
 ### Patrones_Antimicrobianos     
 Patrones_Antimicrobianos	Conteo	ID     
