@@ -44,38 +44,40 @@ Tigeciclina" ~ "Tetraciclinas
 
 ## Archivos de salida:    
 ### Tabla_Multiresistencia    
-Serotipo	 | R1 | R3	| Total |	ID_R1 |	ID_R3               |    
------------|----|-----|-------|-------|---------------------|
-Hadar	     |0	  |100	|2      |	      |ID01,ID02            |   
-Newport	   |0   |100  |1      |		    |ID14                 |
-Thompson	 |0   |100  |1      |		    |ID61                 |    
-Albany	   |20  |80   |5      |ID11   |ID97,ID97,ID25,ID59  |
-Senftenberg|33.3|66.67|3      |ID18   |ID99,ID34            |    
+Serotipo	 | R1  | R3	 | Total |	ID_R1 |	ID_R3               |    
+-----------|-----|-----|-------|--------|---------------------|
+Hadar	     |0	   |100	 |2      |	      |ID01,ID02            |   
+Newport	   |0    |100  |1      |		    |ID14                 |
+Thompson	 |0    |100  |1      |		    |ID61                 |    
+Albany	   |20   |80   |5      |ID11    |ID97,ID97,ID25,ID59  |
+Senftenberg|33.33|66.67|3      |ID18    |ID99,ID34            |    
 
 ### Patrones_Antimicrobianos     
-Patrones_Antimicrobianos	Conteo	ID     
-CHL-TET-AMI-GEN-LVX	2	ID57,ID58    
-GEN-CHL-CIP	1	ID51
-GEN-TAZ-CHL-CIP	1	ID33
-TOTAL	64	
+Patrones_Antimicrobianos |	Conteo |  ID     |    
+-------------------------|---------|---------|
+CHL-TET-AMI-GEN-LVX      |	2      |ID57,ID58|    
+GEN-CHL-CIP              |	1      |	ID51   |
+GEN-TAZ-CHL-CIP	1	ID33   |         |         |
+TOTAL	                   |   64    |         |	
 
 ### Perfil_Genes_RAM_Aminoglucosidos 
-Perfil	No_Aislados	Genotipo_Total
-aac(3)-IId,aph(3')-Ia	1	
-aadA1	2	
-aadA1,aph(4)-Ia,aac(3)-IV	21	
-aadA1,aph(4)-Ia,aac(3)-IV,aph(3')-Ia	17	
-aadA2	4	
-aadA2,aadA2b,aph(4)-Ia,aac(3)-IV	1	
-aadA2b	1	
-aadA5,aadA7	1	
-aph(3'')-Ib	1	
-aph(3'')-Ib,aadA1,aph(6)-Id	1	
-aph(4)-Ia,aac(3)-IV	4	
-aph(4)-Ia,aac(3)-IV,aadA1,aadA2b	1	
-aph(6)-Id,aph(3'')-Ib	8	63
-Sin_Gen	89	89
-Total	152	152
+Perfil                               |	No_Aislados	| Genotipo_Total |
+-------------------------------------|--------------|----------------|
+aac(3)-IId,aph(3')-Ia                | 	1           |                |	
+aadA1	                               |  2           |                |	
+aadA1,aph(4)-Ia,aac(3)-IV	           | 21           |                |	
+aadA1,aph(4)-Ia,aac(3)-IV,aph(3')-Ia | 17           |                |	
+aadA2	                               | 4	          |                |
+aadA2,aadA2b,aph(4)-Ia,aac(3)-IV	   | 1            |                |	
+aadA2b	                             | 1            |                |	
+aadA5,aadA7	                         | 1	          |                |
+aph(3'')-Ib	                         | 1            |                |	
+aph(3'')-Ib,aadA1,aph(6)-Id	         | 1	          |                |
+aph(4)-Ia,aac(3)-IV	                 | 4            |                |	
+aph(4)-Ia,aac(3)-IV,aadA1,aadA2b	   | 1            |                |	
+aph(6)-Id,aph(3'')-Ib	               | 8            |	63             |
+Sin_Gen	                             | 89           |	89             |
+Total	                               |152           |	152
 
 ### Tabla_Genotipo_Fenotipo
 Perfil	AST_Resistentes	AST_Susceptibles	Genotipo_Total	ID_AST_Resistentes	ID_AST_Susceptibles
