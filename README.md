@@ -20,7 +20,7 @@ Salmonella_enterica |	ID03 | aac(6')-Iaa	fosL1	floR	qnrB19
 ### Archivo_fenotipo:
 
 ID  | Amikacina	| AK_mg/l | Gentemicina	| GN_mg/l    
-----|-----------|---------|-------------     
+--- |    ---    |   ---   |     ---     |
 ID01	| Susceptible	| 2	| Susceptible	| 2    
 ID02	| Susceptible	| 2	| Susceptible	| 1    
 ID03	| Susceptible	| 2	| Susceptible	| 1    
