@@ -57,8 +57,8 @@ Patrones_Antimicrobianos |	Conteo |  ID     |
 -------------------------|---------|---------|
 CHL-TET-AMI-GEN-LVX      |	2      |ID57,ID58|    
 GEN-CHL-CIP              |	1      |	ID51   |
-GEN-TAZ-CHL-CIP	1	ID33   |         |         |
-TOTAL	                   |   64    |         |	
+GEN-TAZ-CHL-CIP          |	1	     | ID33    |         
+TOTAL	                   |  64     |         |	
 
 ### Perfil_Genes_RAM_Aminoglucosidos 
 Perfil                               |	No_Aislados	| Genotipo_Total |
@@ -80,12 +80,13 @@ Sin_Gen	                             | 89           |	89             |
 Total	                               |152           |	152
 
 ### Tabla_Genotipo_Fenotipo
-Perfil	                         | AST_Resistentes	 | AST_Susceptibles	| Genotipo_Total	| ID_AST_Resistentes	| ID_AST_Susceptibles                |
-aac(3)-IId,aph(3')-Ia	           | 1  	             | 0		            |                 | ID72                |	NA                                 |
-aadA1                            | 0                 | 2		            |                 | NA                  |	ID43,ID87                          |
-aph(4)-Ia,aac(3)-IV,aadA1,aadA2b | 1	               | 0                |		              | ID34                |	NA                                 |
-aph(6)-Id,aph(3'')-Ib            | 1	               | 7                |	63              |	ID59	              | ID97,ID06,ID08,ID22,ID97,ID21,ID25 |
-Total	                           | 53                | 99	              | 152	            |Especificidad: 89.9, (89)/(99)|Sensibilidad: 118.87, (63)/(53)|
+Perfil	                         | AST_Resistentes	 | AST_Susceptibles	| Genotipo_Total	| ID_AST_Resistentes	   | ID_AST_Susceptibles                 |
+---------------------------------|-------------------|------------------|-----------------|------------------------|-------------------------------------|
+aac(3)-IId,aph(3')-Ia	           | 1  	             | 0		            |                 | ID72                   |	NA                                 |
+aadA1                            | 0                 | 2		            |                 | NA                     |	ID43,ID87                          |
+aph(4)-Ia,aac(3)-IV,aadA1,aadA2b | 1	               | 0                |		              | ID34                   |	NA                                 |
+aph(6)-Id,aph(3'')-Ib            | 1	               | 7                |	63              |	ID59	                 | ID97,ID06,ID08,ID22,ID97,ID21,ID25  |
+Total	                           | 53                | 99	              | 152	            |Especif: 89.9, (89)/(99)|Sens: 118.87, (63)/(53)              |
 
 
 ### Grafica Multiresistencia
