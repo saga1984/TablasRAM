@@ -11,11 +11,11 @@ TablasRAM Importa un archivo de genes RAM y un archivo de resultados de pruebas 
 
   ### Archivo_genotipo:    
 
-Especie	| ID | Genes_RAM  
-----|----|-----
-Salmonella_enterica	| ID01 | aac(6')-Iaa	qnrB19	parC_T57S     
-Salmonella_enterica |	ID02 | aac(6')-Iaa	aadA1	aph(4)-Ia	aac(3)-IV	aph(3')-Ia	blaCTX-M-65    
-Salmonella_enterica |	ID03 | aac(6')-Iaa	fosL1	floR	qnrB19     
+Especie	            | ID   | Genes_RAM                                                      |
+--------------------|------|----------------------------------------------------------------|
+Salmonella_enterica	| ID01 | aac(6')-Iaa	qnrB19	parC_T57S                                 |
+Salmonella_enterica |	ID02 | aac(6')-Iaa	aadA1	aph(4)-Ia	aac(3)-IV	aph(3')-Ia	blaCTX-M-65 | 
+Salmonella_enterica |	ID03 | aac(6')-Iaa	fosL1	floR	qnrB19                                |
 
 ### Archivo_fenotipo:
 
