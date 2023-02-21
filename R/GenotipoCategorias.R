@@ -83,9 +83,9 @@ GenotipoCategorias <- function(archivo_genotipo) {
     Categoria == "Fenicoles" ~ "[cfo0][lmaeq][oltx][:print:][:alnum:]*",
     Categoria == "Aminoglucosidos" ~ "[asr][panmtr][prcdhmt][ A-Z || ( ][^,]*",
     Categoria == "Sulfonamidas" ~ "[GgQqNoPp][ayenoq][rprx]",
-    Categoria == "Diaminopiridinas" ~ "dfr[ABCDGK]",
+    Categoria == "Diaminopiridinas" ~ "dfr[:upper:]",
     Categoria == "Rifamicinas" ~ "[Aair][Rrgop][Rritxho]",
-    Categoria == "Quinolonas" ~ "[GgQqNoPp][ayenoq][rprx][ABCDE][0-9 || _ ]*[^,]*",
+    Categoria == "Quinolonas" ~ "[GgQqNoPp][ayenoq][rprx][:upper:][0-9 || _ ]*[^,]*",
     Categoria == "Macrolidos" ~ "[lcem][rasfhiltegp][htfmbprae][ A-Z || ( ][^,]*",
     TRUE ~ "")
   
@@ -295,10 +295,11 @@ GenotipoCategorias <- function(archivo_genotipo) {
     # agregar el Total
     perfiles[nrow(perfiles), "Perfil"] <- "Total"
     
-    ##################### crear Sin_Gen ############################
-    # re-asignar variable donde esta "Sin_Gen"
-    Sin_Gen <<- which(perfiles$Perfil == "Sin_Gen")
   }
+  
+  ##################### crear Sin_Gen ############################
+  # re-asignar variable donde esta "Sin_Gen"
+  Sin_Gen <<- which(perfiles$Perfil == "Sin_Gen")
   
   # asignar valor de "fin"
   if (Sin_Gen == 1) {
@@ -566,3 +567,4 @@ GenotipoCategorias <- function(archivo_genotipo) {
   Final_df <<- Final
   
 }
+ 
