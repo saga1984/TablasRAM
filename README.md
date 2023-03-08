@@ -28,7 +28,7 @@ ID03 | Susceptible	|    2	  | Susceptible	|    1    |
 ## Antimicrobianos y Categorias incluidos en el paquete:   
          
 Amikacina ~ Aminoglucosidos   
-Ampicilina ~ Betalactamicos    
+Ampicilina ~ Betalactamicos     
 Azitromicina ~ Macrolidos     
 Ceftazidima ~ Betalactamicos     
 Ciprofloxacino ~ Quinolonas      
