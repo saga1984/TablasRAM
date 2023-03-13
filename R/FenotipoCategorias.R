@@ -753,4 +753,4 @@ FenotipoCategorias <- function(archivo_fenotipo){
   TablaR_Final <<- as_tibble(TablaR_Final)
 
 }
-
+?FenotipoCategorias()
