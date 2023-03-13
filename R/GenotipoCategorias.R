@@ -83,7 +83,7 @@ GenotipoCategorias <- function(archivo_genotipo) {
     Categoria == "Fenicoles" ~ "[cfo0][lmaeq][oltx][:print:][:alnum:]*",
     Categoria == "Aminoglucosidos" ~ "[asr][panmtr][prcdhmt][ A-Z || ( ][^,]*",
     Categoria == "Sulfonamidas" ~ "[GgQqNoPp][ayenoq][rprx]",
-    Categoria == "Diaminopiridinas" ~ "dfr[ABCDGK]",
+    Categoria == "Diaminopiridinas" ~ "dfr[:upper:]",
     Categoria == "Rifamicinas" ~ "[Aair][Rrgop][Rritxho]",
     Categoria == "Quinolonas" ~ "[GgQqNoPp][ayenoq][rprx][:upper:][0-9 || _ ]*[^,]*",
     Categoria == "Macrolidos" ~ "[lcem][rasfhiltegp][htfmbprae][ A-Z || ( ][^,]*",
@@ -567,3 +567,4 @@ GenotipoCategorias <- function(archivo_genotipo) {
   Final_df <<- Final
   
 }
+ 
