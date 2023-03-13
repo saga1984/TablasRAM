@@ -10,7 +10,7 @@
 #' @return Crea directorio de categoria de antimicrobiano correspondiente y
 #' guarda dentro archivo de perfiles RAM y tabla final. En el directorio de ruta guarda:
 #' tablas de multiresistencia y patrones de antimicrobianos y grafica de multiresistencia en uno
-#' de los formatos disponibles (jpeg, tiff, bmp, png, svg y eps, default jpeg), en alta resolucion
+#' de los formatos disponibles (jpeg, tiff, bmp y png, default jpeg), en alta resolucion
 #'
 #' @export
 
