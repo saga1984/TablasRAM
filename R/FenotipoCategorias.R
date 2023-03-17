@@ -348,6 +348,7 @@ FenotipoCategorias <- function(archivo_fenotipo){
     Antimicrobiano_patrones == "CIPROFLOXACINO" ~ "CIP",
     Antimicrobiano_patrones == "LEVOFLOXACINO" ~ "LVX",
     Antimicrobiano_patrones == "AZITROMICINA" ~ "AZI",
+    Antimicrobiano_patrones == "TRIMETOPRIMA/SULFAMETOXAZOL" ~ "TMP/SMX",
     TRUE ~ "")
 
   # cambiar nombre de columnas de antimicrobianos a categrorias
@@ -507,6 +508,7 @@ FenotipoCategorias <- function(archivo_fenotipo){
     colnames(AM_Ser)[-c(1,2)] == "Levofloxacino" ~ "Quinolonas",
     colnames(AM_Ser)[-c(1,2)] == "Tetraciclina" ~ "Tetraciclinas",
     colnames(AM_Ser)[-c(1,2)] == "Tigeciclina" ~ "Tetraciclinas",
+    colnames(AM_Ser)[-c(1,2)] == "Trimetoprima/sulfametoxazol" ~ "Sulfonamidas",
     TRUE ~ "")
 
   # sustituir AM por Categoria en nombres de columnas
