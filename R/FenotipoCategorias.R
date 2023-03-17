@@ -96,6 +96,7 @@ FenotipoCategorias <- function(archivo_fenotipo){
     Antimicrobiano == "Ciprofloxacino" ~ "Quinolonas",
     Antimicrobiano == "Levofloxacino" ~ "Quinolonas",
     Antimicrobiano == "Azitromicina" ~ "Macrolidos",
+    Antimicrobiano == "Trimetoprima/sulfametoxazol" ~ "Sulfonamidas",
     TRUE ~ "")
 
   # categoria
@@ -122,7 +123,8 @@ FenotipoCategorias <- function(archivo_fenotipo){
                                 "Levofloxacino_Quinolonas",
                                 "Meropenem_Betalactamicos",
                                 "Tetraciclina_Tetraciclinas",
-                                "Tigeciclina_Tetraciclinas")
+                                "Tigeciclina_Tetraciclinas",
+                                "Trimetoprima/sulfametoxazol")
 
   # obtener columnas que tengan la categoria identificada
   cols <- str_subset(Antimicrobiano_Categoria, Categoria)
@@ -208,14 +210,15 @@ FenotipoCategorias <- function(archivo_fenotipo){
     colnames(Multi_corto)[-1] == "Ceftazidima" ~ "Betalactamicos",
     colnames(Multi_corto)[-1] == "Ciprofloxacino" ~ "Quinolonas",
     colnames(Multi_corto)[-1] == "Cloranfenicol" ~ "Fenicoles",
-    colnames(Multi_corto)[-1]== "Colistina" ~ "Polimixinas",
-    colnames(Multi_corto)[-1]== "Ertapenem" ~ "Betalactamicos",
-    colnames(Multi_corto)[-1]== "Gentamicina" ~ "Aminoglucosidos",
+    colnames(Multi_corto)[-1] == "Colistina" ~ "Polimixinas",
+    colnames(Multi_corto)[-1] == "Ertapenem" ~ "Betalactamicos",
+    colnames(Multi_corto)[-1] == "Gentamicina" ~ "Aminoglucosidos",
     colnames(Multi_corto)[-1] == "Imipenem" ~ "Betalactamicos",
     colnames(Multi_corto)[-1] == "Meropenem" ~ "Betalactamicos",
-    colnames(Multi_corto)[-1]== "Levofloxacino" ~ "Quinolonas",
+    colnames(Multi_corto)[-1] == "Levofloxacino" ~ "Quinolonas",
     colnames(Multi_corto)[-1] == "Tetraciclina" ~ "Tetraciclinas",
     colnames(Multi_corto)[-1] == "Tigeciclina" ~ "Tetraciclinas",
+    colnames(Multi_corto)[-1] == "Trimetoprima/sulfametoxazol" ~ "Sulfonamidas",
     TRUE ~ "")
 
   # asignar nombre de columnas de antimicrobianos a categorias
