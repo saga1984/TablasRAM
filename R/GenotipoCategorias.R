@@ -574,7 +574,7 @@ GenotipoCategorias <- function(archivo_genotipo) {
                           reorder(Perfil, AST_Resistentes, fun = "length"))
   
   # graficar
-  ggPerfil <- ggplot(data = Final_df,
+  ggPerfil <<- ggplot(data = Final_df,
                        mapping = aes(x = Perfil, 
                                      y = AST_Resistentes, 
                                      fill = Perfil)) +

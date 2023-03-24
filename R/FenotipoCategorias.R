@@ -903,7 +903,7 @@ FenotipoCategorias <- function(archivo_fenotipo){
                                 reorder(Serotipo, Conteo, fun = "length"))
   
   # graficar
-  ggSerotipos <- ggplot(data = AM_Ser_Conteo,
+  ggSerotipos <<- ggplot(data = AM_Ser_Conteo,
                         mapping = aes(x = Serotipo, 
                                       y = Conteo, 
                                       fill = Serotipo)) +
@@ -923,7 +923,7 @@ FenotipoCategorias <- function(archivo_fenotipo){
                                                         fun = "length"))
   
   # graficar
-  ggPatrones <- ggplot(data = Patrones_Final,
+  ggPatrones <<- ggplot(data = Patrones_Final,
                        mapping = aes(x = Patron_Antimicrobianos, 
                                      y = Conteo, 
                                      fill = Patron_Antimicrobianos)) +
