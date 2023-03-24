@@ -98,15 +98,15 @@ Total	                           |         53        |        99        |       
 
 ### Grafica Genotipo vs Fenotipo
 
-![Multiresistencia](FenvsGen_cont.png)
+![GenotipoFenotipo]()
 
 ### Grafica Serotipos
 
-![Multiresistencia](Serotipos_cont.png)
+![Serotipos](Serotipos_cont.png)
 
 ### Grafica Patrones Antimicrobianos
 
-![Multiresistencia](Patrones_cont.png)
+![PatronesAntimcrobianos]()
 
 
 
