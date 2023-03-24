@@ -15,7 +15,7 @@
 #' @export
 
 GenotipoCategorias <- function(archivo_genotipo) {
-  
+
   # crear objeto de R
   sent_2019_gen <<- read.csv(archivo_genotipo,
                              header = FALSE,
@@ -72,7 +72,7 @@ GenotipoCategorias <- function(archivo_genotipo) {
   numero_genes <<- length(levels(niveles_all_2))
   
   # encontrar si algun gen es constitutivo
-  #Sent_2019_Gen[colSums(Sent_2019_Gen == "aac(6')-Iaa") >= nrow(ASTs_categoria)]
+  # Sent_2019_Gen[colSums(Sent_2019_Gen == "aac(6')-Iaa") >= nrow(ASTs_categoria)]
   ############# FILTRAR IDs DE INTERES #############
   
   # regex
@@ -82,8 +82,8 @@ GenotipoCategorias <- function(archivo_genotipo) {
     Categoria == "Betalactamicos"~ "[abchpmr][bmlefptu][acgoprsx][CTL][MATE][PRXMY][:print:][:print:][^,]*[:digit:]*",
     Categoria == "Fenicoles" ~ "[cfo0][lmaeq][oltx][:print:][:alnum:]*",
     Categoria == "Aminoglucosidos" ~ "[asr][panmtr][prcdhmt][ A-Z || ( ][^,]*",
-    Categoria == "Sulfonamidas" ~ "[GgQqNoPp][ayenoq][rprx]",
-    Categoria == "Diaminopiridinas" ~ "dfr[:upper:]",
+    Categoria == "Sulfonamidas" ~ "[SsFf][uo][l][ A-Z || 0-9 ]",
+    Categoria == "Diaminopirimidinas" ~ "dfr[:upper:]",
     Categoria == "Rifamicinas" ~ "[Aair][Rrgop][Rritxho]",
     Categoria == "Quinolonas" ~ "[GgQqNoPp][ayenoq][rprx][:upper:][0-9 || _ ]*[^,]*",
     Categoria == "Macrolidos" ~ "[lcem][rasfhiltegp][htfmbprae][ A-Z || ( ][^,]*",
@@ -92,7 +92,7 @@ GenotipoCategorias <- function(archivo_genotipo) {
   # genes
   Gen <- unite(Sent_2019_Gen,
                col = "Genes",
-               paste("V.",3:( 1+ncol(Sent_2019_Gen) ), sep = ""),
+               colnames(Sent_2019_Gen)[-1],
                sep = ",")
   
   ######## clasificar en R y S ########
@@ -117,32 +117,36 @@ GenotipoCategorias <- function(archivo_genotipo) {
   # encontrar fila con mayor numero de elementos
   numero_mayor_elementos <- max(lengths(Gen$Perfil))
   
-  # modificar el numero de elemtos de la lista (convertir a numero_mayor_elementos)
+  # modificar el numero de elemetos de la lista (convertir a numero_mayor_elementos)
   for (i in 1:length(Gen$Perfil)){
     length(Gen$Perfil[[i]]) <- numero_mayor_elementos
   }
   
-  # crear la lista de elementos a data frame
-  Gen2 <- as.data.frame(Gen$Perfil) %>% transpose()
+  
+  # convertir la lista de elementos a data frame y transponer
+  Gen2 <- as.data.frame(Gen$Perfil) %>% t()
   
   # unir data frames
-  Gen3 <- cbind(Gen[,c("ID","Resistencia")],Gen2)
+  Gen3 <- cbind(Gen[, c("ID","Resistencia")], Gen2)
+  
   
   # volver a crear columna perfil con NAs
   Gen4 <- unite(Gen3,
                 col = "Perfil_NA",
-                paste("V",1:numero_mayor_elementos, sep = ""),
+                colnames(Gen3)[-(1:2)],
                 sep = ",")
   
   # remover NAs
   Gen4 <- gsub(
-    c('NA|,NA|NA,'),'',Gen4$Perfil_NA) %>%
+    c('NA|,NA|NA,'), '', Gen4$Perfil_NA) %>%
     tibble()
   
+  # asiganr nombre a columna de genes de categoria elegida
   colnames(Gen4) <- "Perfil"
   
   # unir columna perfil limpia
   Gen5 <- cbind(Gen3[,c("ID", "Resistencia")], Gen4)
+  
   # asignar variable Gen y convertir a tibble
   Gen <- Gen5
   Gen <<- as_tibble(Gen)
@@ -153,6 +157,7 @@ GenotipoCategorias <- function(archivo_genotipo) {
   Completo <- as.data.frame(merge(Gen, ASTs_categoria, by = "ID"))
   Completo <- type.convert(Completo, as.is = TRUE)
   Completo <<- na.omit(Completo)
+  
   # cambiar nombre de columnas
   colnames(Completo) <- c("ID", "Genotipo", "Perfil", "Fenotipo")
   
@@ -181,9 +186,11 @@ GenotipoCategorias <- function(archivo_genotipo) {
   # columnas filtradas
   col1 <- Completo$Genotipo == "Resistente"
   col2 <- Completo$Fenotipo == "Resistente"
+  
   # sumas
   suma_col1 <- sum(col1)
   suma_col2 <- sum(col2)
+  
   # obtener sensiblidad
   Sensibilidad <- (suma_col1 / suma_col2) * 100
   sensibilidad <<- capture.output(cat("Sensibilidad: ", round(Sensibilidad,2), ",",
@@ -196,9 +203,11 @@ GenotipoCategorias <- function(archivo_genotipo) {
   # columnas filtradas
   col1 <- Completo$Genotipo == "Susceptible"
   col2 <- Completo$Fenotipo == "Susceptible"
+  
   # sumas
   suma_col1 <- sum(col1)
   suma_col2 <- sum(col2)
+  
   # obtener sensiblidad
   Especificidad <- (suma_col1 / suma_col2) * 100
   especificidad <<- capture.output(cat("Especificidad: ", round(Especificidad,2), ",",
@@ -220,8 +229,8 @@ GenotipoCategorias <- function(archivo_genotipo) {
   ####### asignar valor de fin (columna donde esta "Sin_Gen") #######
   # variable donde esta "Sin_Gen"
   constitutivo <- str_detect(Completo$Perfil,
-             "aac[:punct:]6[:punct:][:punct:]-Iaa,|aac[:punct:]6[:punct:][:punct:]-Iaa")
- 
+                             "aac[:punct:]6[:punct:][:punct:]-Iaa,|aac[:punct:]6[:punct:][:punct:]-Iaa")
+  
   
   # si no existe Sin_Gen es muy probable que exista el gen constitutivo aac(6')-Iaa
   # se debe remover
@@ -230,7 +239,7 @@ GenotipoCategorias <- function(archivo_genotipo) {
     # reemplazar gen constitutivo por strng vacio
     Completo$Perfil <- str_replace_all(
       Completo$Perfil, "aac[:punct:]6[:punct:][:punct:]-Iaa,|aac[:punct:]6[:punct:][:punct:]-Iaa", "")
-  
+    
     # reemplazar string vacio por "Sin_Gen"
     Completo$Perfil[Completo$Perfil == ""] <- "Sin_Gen"
     
@@ -309,7 +318,7 @@ GenotipoCategorias <- function(archivo_genotipo) {
     # obtener fila final de aislados con genes
     fin <- which(perfiles$Perfil == "Sin_Gen") - 1
   }
-    
+  
   # sumar aislados con genes
   perfiles[fin, 3] <- sum(perfiles$No_Aislados[-c(Sin_Gen, nrow(perfiles))])
   # agregar valor de "Sin_Gen"
@@ -322,7 +331,7 @@ GenotipoCategorias <- function(archivo_genotipo) {
   perfiles[is.na(perfiles)] <- ""
   # volver global
   Perfiles <<- as.data.frame(perfiles)
-        
+  
   # imprimir data frame
   print(Perfiles)
   
@@ -426,27 +435,24 @@ GenotipoCategorias <- function(archivo_genotipo) {
   
   ########### agregar AST_Resistentes #############
   
-  AST_R <- ID_Fenotipos_Resistentes_Conteos %>%
-    data.frame() %>%
-    transpose()
+  AST_R <- ID_Fenotipos_Resistentes_Conteos %>% data.frame() %>% t() %>% data.frame()
   
-  AST_R[nrow(AST_R)+1,] <- AST_R %>% sum()
-  colnames(AST_R) <- "AST_Resistentes"
+  AST_R[nrow(AST_R)+1,] <- AST_R %>% sum() 
+  names(AST_R) <- "AST_Resistentes"
   AST_R <- cbind("Perfil" = Perfiles$Perfil, AST_R)
   
   AST_R <<- AST_R
   
   ########### agregar AST_Susceptibles ############
   
-  AST_S <- ID_Fenotipos_Susceptibles_Conteos %>%
-    data.frame() %>%
-    transpose()
+  AST_S <- ID_Fenotipos_Susceptibles_Conteos %>% data.frame() %>% t() %>% data.frame()
   
   AST_S[nrow(AST_S)+1,] <- AST_S %>% sum()
   colnames(AST_S) <- "AST_Susceptibles"
   AST_S <- cbind("Perfil" = Perfiles$Perfil, AST_S)
   
   AST_S <<- AST_S
+  
   ########### agregar AST_ID_Resistentes ###############
   
   # quitar totales de df Perfiles
@@ -458,7 +464,7 @@ GenotipoCategorias <- function(archivo_genotipo) {
     colnames(ID_Fenotipos_Susceptibles[[i]]) <- Perfiles2$Perfil[i]
   }
   
-  if (sum(Completo$Fenotipo == "Susceptible") == nrow(Completo)) {
+  if(sum(Completo$Fenotipo == "Susceptible") == nrow(Completo)){
     
     # crear directamente IDs_Fenotipos_Resistentes_1
     IDs_Fenotipos_Resistentes_1 <<- c(
@@ -466,18 +472,15 @@ GenotipoCategorias <- function(archivo_genotipo) {
       as_tibble()
     names(IDs_Fenotipos_Resistentes_1) <- "Genes"
     
-  } else {
+  }else{
     
     # crear un solo df en base a df guardados en listas
-    IDs_Fenotipos_Resistentes_0 <<- bind_rows(ID_Fenotipos_Resistentes,) %>%
-      transpose
+    IDs_Fenotipos_Resistentes_0 <<- bind_rows(ID_Fenotipos_Resistentes,) %>% t() %>% data.frame()
     
-    # unir IDs en una sola columna
     IDs_Fenotipos_Resistentes_1 <<- unite(IDs_Fenotipos_Resistentes_0,
                                           col = "Genes",
-                                          paste("V", 1:(ncol(IDs_Fenotipos_Resistentes_0)), sep = ""),
+                                          colnames(IDs_Fenotipos_Resistentes_0),
                                           sep = ",")
-    
   }
   
   # remover NAs
@@ -498,7 +501,6 @@ GenotipoCategorias <- function(archivo_genotipo) {
   
   ########### agregar AST_ID_Susceptibles ###############
   
-  
   if (sum(Completo$Fenotipo == "Resistente") == nrow(Completo)) {
     
     # crear directamente IDs_Fenotipos_Resistentes_1
@@ -510,15 +512,13 @@ GenotipoCategorias <- function(archivo_genotipo) {
   } else {
     
     # crear un solo df en base a df guardados en listas
-    IDs_Fenotipos_Susceptibles_0 <<- bind_rows(ID_Fenotipos_Susceptibles,) %>%
-      transpose
+    IDs_Fenotipos_Susceptibles_0 <<- bind_rows(ID_Fenotipos_Susceptibles,) %>% t() %>% data.frame
     
     # unir IDs en una sola columna
     IDs_Fenotipos_Susceptibles_1 <<- unite(IDs_Fenotipos_Susceptibles_0,
                                            col = "Genes",
-                                           paste("V", 1:(ncol(IDs_Fenotipos_Susceptibles_0)), sep = ""),
+                                           colnames(IDs_Fenotipos_Susceptibles_0),
                                            sep = ",")
-    
   }
   
   # remover NAs
@@ -537,7 +537,6 @@ GenotipoCategorias <- function(archivo_genotipo) {
   
   # volver global
   IDs_Fenotipos_Susceptibles <<- IDs_Fenotipos_Susceptibles_3
-  
   
   ######## crear data frame final ##########
   # df intermedio AST
@@ -566,5 +565,24 @@ GenotipoCategorias <- function(archivo_genotipo) {
   # volver global
   Final_df <<- Final
   
+  ########################### graficar df_final ############################
+  
+  # ordenar
+  Final_df$Perfil <- with(data = Final_df,
+                          reorder(Perfil, AST_Resistentes, fun = "length"))
+  
+  # graficar
+  ggPerfil <- ggplot(data = Final_df,
+                       mapping = aes(x = Perfil, 
+                                     y = AST_Resistentes, 
+                                     fill = Perfil)) +
+    geom_bar(stat = "identity", position = "stack") +
+    theme_minimal() +
+    theme(legend.position = "none") +
+    coord_flip() +
+    ggtitle("Perfil de Genes de Aislados Resistentes por AST") +
+    labs(y = "Conteo", x = "", fill = "") +
+    geom_text(label = paste("N =", Final_df$AST_Resistentes), nudge_y = 6)
+  
 }
- 
+

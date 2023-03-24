@@ -8,11 +8,13 @@
 #'
 #' @param ruta Ruta del directorio donde se creara el directorio para guardar resultados
 #' @return Crea directorio de categoria de antimicrobiano correspondiente y
-#' guarda dentro archivo de perfiles y tabla final.
+#' guarda dentro archivo de perfiles RAM y tabla final. En el directorio de ruta guarda:
+#' tablas de multiresistencia y patrones de antimicrobianos y grafica de multiresistencia en uno
+#' de los formatos disponibles (jpeg, tiff, bmp y png, default jpeg), en alta resolucion
 #'
 #' @export
 
-GuardarCategoriasRAM <- function(ruta, nombre) {
+GuardarCategoriasRAM <- function(ruta, nombre, formato_img = jpeg) {
  
    if (exists("Final_df") & exists("Perfiles") & exists("Patrones_Final")) {
     # definir variables
@@ -30,12 +32,33 @@ GuardarCategoriasRAM <- function(ruta, nombre) {
     archivo_final_multiresistencia <- paste(ruta, "Tabla_Multiresistencia", 
                                     ".csv", sep = "")
     ######################## Imagen Multiresistencia ######################
-    ggsave(filename = "Multiresistencia.jpg", 
-           plot = Multiresistencia,
-           path = ruta,
-           width = 20, 
-           height = 20, 
-           units = "cm")
+    formato_img(paste(ruta, "Multirresistencia.", as.character(substitute(formato_img)), sep = ""),
+                res = 300,
+                width = 2000,
+                height = 2000)
+    print(Multiresistencia)
+    dev.off()
+    ######################## Imagen conteo serotipos ######################
+    formato_img(paste(ruta, "Serotipos_cont.", as.character(substitute(formato_img)), sep = ""),
+                res = 300,
+                width = 2000,
+                height = 2000)
+    print(ggSerotipos)
+    dev.off()
+    ########################### Imagen patrones ###########################
+    formato_img(paste(ruta, "Patrones_cont.", as.character(substitute(formato_img)), sep = ""),
+                res = 300,
+                width = 2000,
+                height = 2000)
+    print(ggPatrones)
+    dev.off()
+    ###################### Imagen genotipo vs fenotipo #####################
+    formato_img(paste(ruta, "FenvsGen_cont.", as.character(substitute(formato_img)), sep = ""),
+                res = 300,
+                width = 2000,
+                height = 2000)
+    print(ggPerfil)
+    dev.off()
     ##########################################################################
     # crear directorio
     dir.create(directorio_final)
