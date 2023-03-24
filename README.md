@@ -98,7 +98,7 @@ Total	                           |         53        |        99        |       
 
 ### Grafica Genotipo vs Fenotipo
 
-![GenotipoFenotipo]()
+![FenotipoGenotipo](FenvsGen_cont.png)
 
 ### Grafica Serotipos
 
@@ -106,7 +106,7 @@ Total	                           |         53        |        99        |       
 
 ### Grafica Patrones Antimicrobianos
 
-![PatronesAntimcrobianos]()
+![Patrones<Antimicrobianos]()
 
 
 
