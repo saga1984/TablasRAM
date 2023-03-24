@@ -24,6 +24,7 @@ ID   | Amikacina	  | AK_mg/l | Gentemicina	| GN_mg/l |
 ID01 | S	|    2	  | S	|    2    |
 ID02 | R	|    2	  | S	|    1    |
 ID03 | S	|    2	  | R	|    1    |
+*NOTA: solo acepta dos valores R = Resistente; S = Susceptible
 
 ## Antimicrobianos y Categorias incluidos en el paquete:   
          
