@@ -582,7 +582,7 @@ GenotipoCategorias <- function(archivo_genotipo) {
     theme_minimal() +
     theme(legend.position = "none") +
     coord_flip() +
-    ggtitle("Perfil de Genes de Aislados Resistentes por AST") +
+    ggtitle(paste("Perfil de Genes de Aislados Resistentes por AST ", "(",Categoria, ")",sep = "")) +
     labs(y = "Conteo", x = "", fill = "") +
     geom_text(label = paste("N =", Final_df$AST_Resistentes), nudge_y = 6)
   

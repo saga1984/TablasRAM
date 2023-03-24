@@ -931,7 +931,7 @@ FenotipoCategorias <- function(archivo_fenotipo){
     theme_minimal() +
     theme(legend.position = "none") +
     coord_flip() +
-    ggtitle("Serotipos") +
+    ggtitle("Patrones Antimicrobianos") +
     labs(y = "Conteo", x = "", fill = "") 
   
 }
