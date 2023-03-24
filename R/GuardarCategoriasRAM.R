@@ -38,6 +38,7 @@ GuardarCategoriasRAM <- function(ruta, nombre, formato_img = jpeg) {
                 height = 2000)
     print(Multiresistencia)
     dev.off()
+<<<<<<< HEAD
     ######################## Imagen conteo serotipos ######################
     formato_img(paste(ruta, "Serotipos_cont.", as.character(substitute(formato_img)), sep = ""),
                 res = 300,
@@ -59,6 +60,8 @@ GuardarCategoriasRAM <- function(ruta, nombre, formato_img = jpeg) {
                 height = 2000)
     print(ggPerfil)
     dev.off()
+=======
+>>>>>>> 133d214d5d7338160778302f43c6851d9b262bff
     ##########################################################################
     # crear directorio
     dir.create(directorio_final)
