@@ -93,7 +93,12 @@ Total	                           |         53        |        99        |       
 
 ### Grafica Multiresistencia
 
-![Multiresistencia](https://user-images.githubusercontent.com/113209694/215827673-a7dd7594-5284-4012-a786-4cbe955aab71.png)
+![Multiresistencia]()
+
+### Grafica Genotipo vs Fenotipo
+
+![Multiresistencia](FenvsGen_cont.png)
+
 
 
 
