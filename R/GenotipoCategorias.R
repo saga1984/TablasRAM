@@ -82,13 +82,10 @@ GenotipoCategorias <- function(archivo_genotipo) {
     Categoria == "Betalactamicos"~ "[abchpmr][bmlefptu][acgoprsx][CTL][MATE][PRXMY][:print:][:print:][^,]*[:digit:]*",
     Categoria == "Fenicoles" ~ "[cfo0][lmaeq][oltx][:print:][:alnum:]*",
     Categoria == "Aminoglucosidos" ~ "[asr][panmtr][prcdhmt][ A-Z || ( ][^,]*",
-<<<<<<< HEAD
     Categoria == "Sulfonamidas" ~ "[SsFf][uo][l][ A-Z || 0-9 ]",
     Categoria == "Diaminopirimidinas" ~ "dfr[:upper:]",
-=======
     Categoria == "Sulfonamidas" ~ "[GgQqNoPp][ayenoq][rprx]",
     Categoria == "Diaminopiridinas" ~ "dfr[:upper:]",
->>>>>>> 133d214d5d7338160778302f43c6851d9b262bff
     Categoria == "Rifamicinas" ~ "[Aair][Rrgop][Rritxho]",
     Categoria == "Quinolonas" ~ "[GgQqNoPp][ayenoq][rprx][:upper:][0-9 || _ ]*[^,]*",
     Categoria == "Macrolidos" ~ "[lcem][rasfhiltegp][htfmbprae][ A-Z || ( ][^,]*",
@@ -590,8 +587,3 @@ GenotipoCategorias <- function(archivo_genotipo) {
     geom_text(label = paste("N =", Final_df$AST_Resistentes), nudge_y = 6)
   
 }
-<<<<<<< HEAD
-
-=======
- 
->>>>>>> 133d214d5d7338160778302f43c6851d9b262bff
