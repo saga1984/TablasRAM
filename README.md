@@ -106,7 +106,7 @@ Total	                           |         53        |        99        |       
 
 ### Grafica Patrones Antimicrobianos
 
-![Patrones<Antimicrobianos]()
+![PatronesAntimicrobianos](Patrones_cont.png)
 
 
 
