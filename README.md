@@ -91,13 +91,22 @@ aph(6)-Id,aph(3'')-Ib            |         1         |        7         |	      
 Total	                           |         53        |        99        |       152       |Especif: 89.9, (89)/(99)|Sens: 118.87, (63)/(53)              |
 
 
+#### Las graficas se pueden obtener en formato JPEG (default), BMP, TIFF y PNG
 ### Grafica Multiresistencia
 
-![Multiresistencia]()
+![Multiresistencia](Multirresistencia.png)
 
 ### Grafica Genotipo vs Fenotipo
 
 ![Multiresistencia](FenvsGen_cont.png)
+
+### Grafica Serotipos
+
+![Multiresistencia](Serotipos_cont.png)
+
+### Grafica Patrones Antimicrobianos
+
+![Multiresistencia](Patrones_cont.png)
 
 
 
