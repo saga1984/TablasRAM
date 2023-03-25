@@ -83,8 +83,8 @@ GenotipoCategorias <- function(archivo_genotipo) {
     Categoria == "Fenicoles" ~ "[cfo0][lmaeq][oltx][:print:][:alnum:]*",
     Categoria == "Aminoglucosidos" ~ "[asr][panmtr][prcdhmt][ A-Z || ( ][^,]*",
     Categoria == "Sulfonamidas" ~ "[SsFf][uo][l][ A-Z || 0-9 ]",
-    Categoria == "Diaminopirimidinas" ~ "dfr[:upper:]",
-    Categoria == "Sulfonamidas" ~ "[GgQqNoPp][ayenoq][rprx]",
+    Categoria == "Diaminopirimidinas" ~ "dfr[:upper:]*[^,]",
+    Categoria == "Polimixinas" ~ "[AaIiMmBbCcLlPp][clrhmg][ropxm][A-Z || -]*[^,]",
     Categoria == "Diaminopiridinas" ~ "dfr[:upper:]",
     Categoria == "Rifamicinas" ~ "[Aair][Rrgop][Rritxho]",
     Categoria == "Quinolonas" ~ "[GgQqNoPp][ayenoq][rprx][:upper:][0-9 || _ ]*[^,]*",
@@ -569,21 +569,33 @@ GenotipoCategorias <- function(archivo_genotipo) {
   
   ########################### graficar df_final ############################
   
+  
+  # subset de Final_df
+  Final_df_corto <- Final_df[,c(1,2,3)]
+  
+  # volverlo formato largo 3 cols (2 categoricas 1 numerica)
+  Final_df_long <- Final_df_corto %>% 
+    pivot_longer(cols = !Perfil,
+                 names_to = "Interpretacion",
+                 values_to = "Conteo")
+  
   # ordenar
-  Final_df$Perfil <- with(data = Final_df,
-                          reorder(Perfil, AST_Resistentes, fun = "length"))
+  Final_df_long$Perfil <- with(data = Final_df_long,
+                               reorder(Perfil, Conteo, fun = "length" ))
   
   # graficar
-  ggPerfil <<- ggplot(data = Final_df,
-                       mapping = aes(x = Perfil, 
-                                     y = AST_Resistentes, 
-                                     fill = Perfil)) +
-    geom_bar(stat = "identity", position = "stack") +
+  ggPerfil <<- ggplot(data = Final_df_long,
+                      mapping = aes(x = Perfil, 
+                                    y = Conteo,
+                                    fill = Interpretacion)) +
+    geom_bar(stat = "identity", position = "dodge") +
     theme_minimal() +
-    theme(legend.position = "none") +
     coord_flip() +
+    theme(legend.position = "bottom", legend.title = element_blank()) +
     ggtitle(paste("Perfil de Genes de Aislados Resistentes por AST ", "(",Categoria, ")",sep = "")) +
-    labs(y = "Conteo", x = "", fill = "") +
-    geom_text(label = paste("N =", Final_df$AST_Resistentes), nudge_y = 6)
+    labs(y = "Conteo", x = "") +
+    geom_text(label = paste("N =", 
+                            Final_df_long$Conteo), 
+              nudge_y = 6)
   
 }
