@@ -594,5 +594,5 @@ GenotipoCategorias <- function(archivo_genotipo) {
     theme(legend.position = "bottom", legend.title = element_blank()) +
     ggtitle(paste("Perfil de Genes de Aislados Resistentes y Sensibles por AST ", "(",Categoria, ")",sep = "")) +
     labs(y = "Conteo", x = "") +
-    scale_fill_discrete(labels=c("AST Resistentes", "AST Resistentes"))
+    scale_fill_discrete(labels=c("AST Resistentes", "AST Sensibles"))
 }
