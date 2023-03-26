@@ -574,7 +574,7 @@ GenotipoCategorias <- function(archivo_genotipo) {
   Final_df_corto <- Final_df[,c(1,2,3)]
   
   # volverlo formato largo 3 cols (2 categoricas 1 numerica)
-  Final_df_long <- Final_df_corto %>% 
+  Final_df_long <<- Final_df_corto %>% 
     pivot_longer(cols = !Perfil,
                  names_to = "Interpretacion",
                  values_to = "Conteo")
@@ -592,10 +592,7 @@ GenotipoCategorias <- function(archivo_genotipo) {
     theme_minimal() +
     coord_flip() +
     theme(legend.position = "bottom", legend.title = element_blank()) +
-    ggtitle(paste("Perfil de Genes de Aislados Resistentes por AST ", "(",Categoria, ")",sep = "")) +
+    ggtitle(paste("Perfil de Genes de Aislados Resistentes y Sensibles por AST ", "(",Categoria, ")",sep = "")) +
     labs(y = "Conteo", x = "") +
-    geom_text(label = paste("N =", 
-                            Final_df_long$Conteo), 
-              nudge_y = 6)
-  
+    scale_fill_discrete(labels=c("AST Resistentes", "AST Resistentes"))
 }
