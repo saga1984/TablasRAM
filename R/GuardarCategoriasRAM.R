@@ -55,7 +55,7 @@ GuardarCategoriasRAM <- function(ruta, nombre, formato_img = jpeg) {
     ###################### Imagen genotipo vs fenotipo #####################
     formato_img(paste(ruta, "FenvsGen_cont.", as.character(substitute(formato_img)), sep = ""),
                 res = 300,
-                width = 2500,
+                width = 3000,
                 height = 2000)
     print(ggPerfil)
     dev.off()
