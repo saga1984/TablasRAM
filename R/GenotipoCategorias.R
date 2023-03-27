@@ -587,3 +587,6 @@ GenotipoCategorias <- function(archivo_genotipo) {
     geom_text(label = paste("N =", Final_df$AST_Resistentes), nudge_y = 6)
   
 }
+
+GenotipoCategorias("/home/senasica2/Documentos/2022/RES.POINT_FINDER/ResPointFinder_Salmonella_enterica_resultados_all.csv")
+
