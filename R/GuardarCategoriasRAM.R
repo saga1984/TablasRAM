@@ -52,16 +52,17 @@ GuardarCategoriasRAM <- function(ruta, nombre, formato_img = jpeg) {
                 height = 2000)
     print(ggPatrones)
     dev.off()
-    ###################### Imagen genotipo vs fenotipo #####################
-    formato_img(paste(ruta, "FenvsGen_cont.", as.character(substitute(formato_img)), sep = ""),
+    ##########################################################################
+    # crear directorio
+    dir.create(directorio_final)
+    ####################### Imagen genotipo vs fenotipo ######################
+    formato_img(paste(ruta, Categoria, "/", "FenvsGen_cont.", as.character(substitute(formato_img)), sep = ""),
                 res = 300,
                 width = 3000,
                 height = 2000)
     print(ggPerfil)
     dev.off()
     ##########################################################################
-    # crear directorio
-    dir.create(directorio_final)
     # crear archivo1
     write.csv(Final_df, archivo_final_tabla, row.names = F)
     # crear archivo2
