@@ -15,7 +15,7 @@
 #' @export
 
 GenotipoCategorias <- function(archivo_genotipo) {
-
+  
   # crear objeto de R
   sent_2019_gen <<- read.csv(archivo_genotipo,
                              header = FALSE,
@@ -124,9 +124,8 @@ GenotipoCategorias <- function(archivo_genotipo) {
     length(Gen$Perfil[[i]]) <- numero_mayor_elementos
   }
   
-  
   # convertir la lista de elementos a data frame y transponer
-  Gen2 <- as.data.frame(Gen$Perfil) %>% t()
+  Gen2 <- data.frame(Gen$Perfil) %>% t()
   
   # unir data frames
   Gen3 <- cbind(Gen[, c("ID","Resistencia")], Gen2)
@@ -156,7 +155,7 @@ GenotipoCategorias <- function(archivo_genotipo) {
   ################## UNIR GENOTIPO CON FENOTIPO ###################
   
   # crear df completo
-  Completo <- as.data.frame(merge(Gen, ASTs_categoria, by = "ID"))
+  Completo <- data.frame(merge(Gen, ASTs_categoria, by = "ID"))
   Completo <- type.convert(Completo, as.is = TRUE)
   Completo <<- na.omit(Completo)
   
@@ -181,7 +180,7 @@ GenotipoCategorias <- function(archivo_genotipo) {
   
   # volver global
   Completo$Perfil <- unlist(Completo$Perfil) # quitar formato de lista a Perfil
-  Completo <<- as.data.frame(Completo)
+  Completo <<- data.frame(Completo)
   
   ############# SENSIBILIDAD ##############
   
@@ -262,7 +261,7 @@ GenotipoCategorias <- function(archivo_genotipo) {
     
     # volver global
     Completo$Perfil <- unlist(Completo$Perfil) # quitar formato de lista a Perfil
-    Completo <<- as.data.frame(Completo)
+    Completo <<- data.frame(Completo)
     
     ############### recalcular sensibilidad y sensibilidad ###############
     
@@ -320,11 +319,11 @@ GenotipoCategorias <- function(archivo_genotipo) {
     # obtener fila final de aislados con genes
     fin <- which(perfiles$Perfil == "Sin_Gen") - 1
   }
-  
+  fin
   # sumar aislados con genes
   perfiles[fin, 3] <- sum(perfiles$No_Aislados[-c(Sin_Gen, nrow(perfiles))])
   # agregar valor de "Sin_Gen"
-  perfiles[perfiles$Perfil == "Sin_Gen", 3] <- perfiles[perfiles$Perfil == "Sin_Gen",2]
+  perfiles[perfiles$Perfil == "Sin_Gen", 3] <- perfiles[perfiles$Perfil == "Sin_Gen", 2]
   # volver a asiganr cnombres de columnas
   colnames(perfiles) <- c("Perfil", "No_Aislados", "Genotipo_Total")
   # sumas genotipo con gen y sin gen
@@ -332,7 +331,7 @@ GenotipoCategorias <- function(archivo_genotipo) {
   # cambiar NAs por 0s
   perfiles[is.na(perfiles)] <- ""
   # volver global
-  Perfiles <<- as.data.frame(perfiles)
+  Perfiles <<- data.frame(perfiles)
   
   # imprimir data frame
   print(Perfiles)
@@ -352,9 +351,6 @@ GenotipoCategorias <- function(archivo_genotipo) {
   
   # ver perfiles
   niveles <- levels(Completo$Perfil)
-  
-  # longitud de niveles
-  length(niveles)
   
   ### volver global ###
   niveles <<- niveles
@@ -409,10 +405,12 @@ GenotipoCategorias <- function(archivo_genotipo) {
       paste("ID_Fenotipos_Resistentes_", niveles[i], sep = ""),
       na.omit(Fenotipos_Resistentes[[i]][1])
     )
+    names(ID_Fenotipos_Resistentes)[i] <- niveles[i]
     ID_Fenotipos_Resistentes_Conteos[[i]] <- assign(
       paste("ID_Fenotipos_Resistentes_Conteo_", niveles[i], sep = ""),
       nrow(Fenotipos_Resistentes[[i]])
     )
+    names(ID_Fenotipos_Resistentes_Conteos)[i] <- niveles[i]
   }
   
   ######### Poblar listas de Susceptibles ##########
@@ -421,10 +419,12 @@ GenotipoCategorias <- function(archivo_genotipo) {
       paste("ID_Fenotipos_Susceptibles_", niveles[i], sep = ""),
       na.omit( Fenotipos_Susceptibles[[i]][1])
     )
+    names(ID_Fenotipos_Susceptibles)[i] <- niveles[i] # nombrar
     ID_Fenotipos_Susceptibles_Conteos[[i]] <- assign(
       paste("ID_Fenotipos_Susceptibles_Conteo_", niveles[i], sep = ""),
       nrow(Fenotipos_Susceptibles[[i]])
     )
+    names(ID_Fenotipos_Susceptibles_Conteos)[i] <- niveles[i] # nombrar
   }
   
   ################## volver globales ####################
@@ -437,130 +437,236 @@ GenotipoCategorias <- function(archivo_genotipo) {
   
   ########### agregar AST_Resistentes #############
   
-  AST_R <- ID_Fenotipos_Resistentes_Conteos %>% data.frame() %>% t() %>% data.frame()
+  # volver lista a Data frame
+  AST_R <- bind_rows(ID_Fenotipos_Resistentes_Conteos) %>% t() %>% data.frame()
   
-  AST_R[nrow(AST_R)+1,] <- AST_R %>% sum() 
+  # AST_R[nrow(AST_R) + 1,] <- AST_R %>% sum() 
   names(AST_R) <- "AST_Resistentes"
-  AST_R <- cbind("Perfil" = Perfiles$Perfil, AST_R)
+  AST_R[, "Perfil"] <- rownames(AST_R)
+  #AST_R[nrow(AST_R), "Perfil"] <- "Total"
   
+  # volver global
   AST_R <<- AST_R
   
   ########### agregar AST_Susceptibles ############
   
-  AST_S <- ID_Fenotipos_Susceptibles_Conteos %>% data.frame() %>% t() %>% data.frame()
+  # volver lista a Data frame
+  AST_S <- bind_rows(ID_Fenotipos_Susceptibles_Conteos) %>% t() %>% data.frame()
   
-  AST_S[nrow(AST_S)+1,] <- AST_S %>% sum()
-  colnames(AST_S) <- "AST_Susceptibles"
-  AST_S <- cbind("Perfil" = Perfiles$Perfil, AST_S)
+  # preparar AST_S para hacer merge
+  #AST_S[nrow(AST_S)+1,] <- AST_S %>% sum() 
+  names(AST_S) <- "AST_Susceptibles"
+  AST_S[, "Perfil"] <- rownames(AST_S)
+  #AST_S[nrow(AST_S), "Perfil"] <- "Total"
   
+  # volver global
   AST_S <<- AST_S
   
-  ########### agregar AST_ID_Resistentes ###############
-  
+  ############ unir AST_R y AST_S y Perfiles ###########
   # quitar totales de df Perfiles
   Perfiles2 <- Perfiles[-nrow(Perfiles),]
   
-  # asignar nombres de columnas a df guardados en listas
-  for (i in 1:length(Perfiles2$Perfil)){
-    colnames(ID_Fenotipos_Resistentes[[i]]) <- Perfiles2$Perfil[i]
-    colnames(ID_Fenotipos_Susceptibles[[i]]) <- Perfiles2$Perfil[i]
-  }
+  # unir AST_R y AST_S
+  AST_R_S <- merge(AST_R, AST_S, by = "Perfil")
+  # unir AST_R_S con Perfiles
+  ASTs_Perfiles <- merge(AST_R_S, Perfiles2[, c("Perfil", "No_Aislados")], by = "Perfil")
+  
+  # volver global
+  ASTs_Perfiles <<- ASTs_Perfiles
+  
+  ########### agregar AST_ID_Resistentes ###############
+  
+  # llenar df vacios con NAs para no perder perfiles
+  IDs_Fenotipos_Resistentes <- map_if(ID_Fenotipos_Resistentes, ~ nrow(.) == 0, ~ data.frame(matrix(NA, nrow = 1, ncol = 0)))
   
   if(sum(Completo$Fenotipo == "Susceptible") == nrow(Completo)){
     
-    # crear directamente IDs_Fenotipos_Resistentes_1
-    IDs_Fenotipos_Resistentes_1 <<- c(
-      rep("NA", times = length(ID_Fenotipos_Resistentes))) %>%
-      as_tibble()
-    names(IDs_Fenotipos_Resistentes_1) <- "Genes"
+    # crear un solo df en base a df guardados en listas
+    IDs_Fenotipos_Resistentes_0 <<- bind_rows(IDs_Fenotipos_Resistentes, .id = "Perfil") %>% 
+      data.frame()
+    
+    # crear directamente IDs_Fenotipos_Resistentes 
+    IDs_Fenotipos_Resistentes_0$ID <- c(rep("Sin_Gen", times = length(ID_Fenotipos_Resistentes))) %>% 
+      as.vector()
+    
+    # asiganr nombres
+    names(IDs_Fenotipos_Resistentes_0) <- c("Perfil", "ID_Resistentes")
+    
+    # crear directamente IDs_Fenotipos_Resistentes y volver global
+    IDs_Fenotipos_Resistentes <- IDs_Fenotipos_Resistentes_0
+    IDs_Fenotipos_Resistentes <<- IDs_Fenotipos_Resistentes
+    
+  }else{
+    
+    # convertir lista de data frames en data frame
+    IDs_Fenotipos_Resistentes_0 <<- bind_rows(IDs_Fenotipos_Resistentes, .id = "Perfil") %>%
+      data.frame()
+    
+    # crear data frame donde se agrupan IDs en forma de listas
+    IDs_Fenotipos_Resistentes_1 <<- IDs_Fenotipos_Resistentes_0 %>%
+      pivot_wider(names_from = "Perfil", values_from = "ID", values_fn = list) %>%
+      t() %>%
+      data.frame()
+    
+    ######### quitar formato de listas ##########
+    
+    # asignar nombres 
+    names(IDs_Fenotipos_Resistentes_1) <- "IDs"
+  
+    # encontrar fila con mayor numero de elementos
+    numero_mayor_elementos <- max(lengths(IDs_Fenotipos_Resistentes_1$IDs))
+    
+    # modificar el numero de elemetos de la lista (convertir a numero_mayor_elementos)
+    for(i in 1:length(IDs_Fenotipos_Resistentes_1$IDs)){
+      length(IDs_Fenotipos_Resistentes_1$IDs[[i]]) <- numero_mayor_elementos
+    }
+    
+    # convertir la lista de elementos a data frame y transponer
+    IDs_Fenotipos_Resistentes_2 <- bind_rows(IDs_Fenotipos_Resistentes_1$IDs) %>% t() %>% data.frame()
+    
+    # unir IDs en una sola columna
+    IDs_Fenotipos_Resistentes_3 <<- unite(IDs_Fenotipos_Resistentes_2,
+                                          col = "ID_Resistentes",
+                                          colnames(IDs_Fenotipos_Resistentes_2),
+                                          sep = ",")
+    
+    # agregar columna de Perfil
+    IDs_Fenotipos_Resistentes_3[, "Perfil"] <- rownames(IDs_Fenotipos_Resistentes_3)
+    
+    # remover NAs
+    IDs_Fenotipos_Resistentes_3$ID_Resistentes <- str_replace_all(
+      IDs_Fenotipos_Resistentes_3$ID_Resistentes,
+      c(",NA|NA,"), "") %>% as.vector()
+    
+    # cambiar NA unicos
+    IDs_Fenotipos_Resistentes_3$ID_Resistentes <- str_replace_all(
+      IDs_Fenotipos_Resistentes_3$ID_Resistentes,
+      c("NA"),"Sin_ID") %>% as.vector()
+    
+    # volver global
+    IDs_Fenotipos_Resistentes <- IDs_Fenotipos_Resistentes_3
+    IDs_Fenotipos_Resistentes <<- IDs_Fenotipos_Resistentes
+    
+  }
+  
+  ########### agregar AST_ID_Susceptibles ###############
+  
+  # llenar df vacios con NAs para no perder perfiles
+  IDs_Fenotipos_Susceptibles <- map_if(ID_Fenotipos_Susceptibles, ~ nrow(.) == 0, ~ data.frame(matrix(NA, nrow = 1, ncol = 0)))
+  
+  if (sum(Completo$Fenotipo == "Resistente") == nrow(Completo)) {
+    
+    # crear un solo df en base a df guardados en listas
+    IDs_Fenotipos_Susceptibles_0 <<- bind_rows(IDs_Fenotipos_Susceptibles, .id = "Perfil") %>% 
+      data.frame()
+    
+    # crear directamente IDs_Fenotipos_Resistentes 
+    IDs_Fenotipos_Susceptibles_0$ID <- c(rep("Sin_Gen", times = length(ID_Fenotipos_Susceptibles))) %>% 
+      as.vector()
+    
+    # asiganr nombres
+    names(IDs_Fenotipos_Susceptibles_0) <- c("Perfil", "ID_Sensibles")
+    
+    # crear directamente IDs_Fenotipos_Resistentes_3
+    IDs_Fenotipos_Susceptibles <- IDs_Fenotipos_Susceptibles_0
+    IDs_Fenotipos_Susceptibles <<- IDs_Fenotipos_Susceptibles
     
   }else{
     
     # crear un solo df en base a df guardados en listas
-    IDs_Fenotipos_Resistentes_0 <<- bind_rows(ID_Fenotipos_Resistentes,) %>% t() %>% data.frame()
+    IDs_Fenotipos_Susceptibles_0 <<- bind_rows(IDs_Fenotipos_Susceptibles, .id = "Perfil") %>% 
+      data.frame()
     
-    IDs_Fenotipos_Resistentes_1 <<- unite(IDs_Fenotipos_Resistentes_0,
-                                          col = "Genes",
-                                          colnames(IDs_Fenotipos_Resistentes_0),
-                                          sep = ",")
-  }
-  
-  # remover NAs
-  IDs_Fenotipos_Resistentes_2 <- gsub(
-    c(',NA|NA,'),'',IDs_Fenotipos_Resistentes_1$Genes) %>%
-    tibble()
-  
-  # asignar nombre de columnas
-  colnames(IDs_Fenotipos_Resistentes_2) <- "ID_AST_Resistentes"
-  
-  IDs_Fenotipos_Resistentes_3 <- cbind("Perfil" = Perfiles2$Perfil,IDs_Fenotipos_Resistentes_2)
-  
-  # crear una fila mas
-  IDs_Fenotipos_Resistentes_3[nrow(IDs_Fenotipos_Resistentes_3)+1,] <- "Total"
-  
-  # volver global
-  IDs_Fenotipos_Resistentes <<- IDs_Fenotipos_Resistentes_3
-  
-  ########### agregar AST_ID_Susceptibles ###############
-  
-  if (sum(Completo$Fenotipo == "Resistente") == nrow(Completo)) {
+    # crear data frame donde se agrupan IDs en forma de listas
+    IDs_Fenotipos_Susceptibles_1 <<- IDs_Fenotipos_Susceptibles_0 %>%
+      pivot_wider(names_from = "Perfil", values_from = "ID", values_fn = list) %>%
+      t() %>%
+      data.frame()
     
-    # crear directamente IDs_Fenotipos_Resistentes_1
-    IDs_Fenotipos_Susceptibles_1 <<- c(
-      rep("NA", times = length(ID_Fenotipos_Susceptibles))) %>%
-      as_tibble()
-    names(IDs_Fenotipos_Susceptibles_1) <- "Genes"
+    ######### quitar formato de listas ##########
+    # asiganr nombres 
+    names(IDs_Fenotipos_Susceptibles_1) <- "IDs"
+  
+    # encontrar fila con mayor numero de elementos
+    numero_mayor_elementos <- max(lengths(IDs_Fenotipos_Susceptibles_1$IDs))
     
-  } else {
+    # modificar el numero de elemetos de la lista (convertir a numero_mayor_elementos)
+    for (i in 1:length(IDs_Fenotipos_Susceptibles_1$IDs)){
+      length(IDs_Fenotipos_Susceptibles_1$IDs[[i]]) <- numero_mayor_elementos
+    }
     
-    # crear un solo df en base a df guardados en listas
-    IDs_Fenotipos_Susceptibles_0 <<- bind_rows(ID_Fenotipos_Susceptibles,) %>% t() %>% data.frame
+    # convertir la lista de elementos a data frame y transponer
+    IDs_Fenotipos_Susceptibles_2 <- bind_rows(IDs_Fenotipos_Susceptibles_1$IDs) %>% t() %>% data.frame()
     
     # unir IDs en una sola columna
-    IDs_Fenotipos_Susceptibles_1 <<- unite(IDs_Fenotipos_Susceptibles_0,
-                                           col = "Genes",
-                                           colnames(IDs_Fenotipos_Susceptibles_0),
+    IDs_Fenotipos_Susceptibles_3 <<- unite(IDs_Fenotipos_Susceptibles_2,
+                                           col = "ID_Susceptibles",
+                                           colnames(IDs_Fenotipos_Susceptibles_2),
                                            sep = ",")
+    
+    # agregar columna de Perfil
+    IDs_Fenotipos_Susceptibles_3[, "Perfil"] <- rownames(IDs_Fenotipos_Susceptibles_3)
+    
+    # remover NAs
+    IDs_Fenotipos_Susceptibles_3$ID_Susceptibles <- str_replace_all(
+      IDs_Fenotipos_Susceptibles_3$ID_Susceptibles,
+      c(",NA|NA,"),
+      "") %>% as.vector()
+    
+    # cambiar NA unicos
+    IDs_Fenotipos_Susceptibles_3$ID_Susceptibles <- str_replace_all(
+      IDs_Fenotipos_Susceptibles_3$ID_Susceptibles,
+      c("NA"), "Sin_ID") %>% as.vector()
+    
+    # volver global
+    colnames(IDs_Fenotipos_Susceptibles_3) <- c("ID_Sensibles", "Perfil")
+    IDs_Fenotipos_Susceptibles <- IDs_Fenotipos_Susceptibles_3
+    IDs_Fenotipos_Susceptibles <<- IDs_Fenotipos_Susceptibles
+    
   }
   
-  # remover NAs
-  IDs_Fenotipos_Susceptibles_2 <- gsub(
-    c(',NA|NA,'),'',IDs_Fenotipos_Susceptibles_1$Genes) %>%
-    tibble()
-  
-  # asignar nombre de columnas
-  colnames(IDs_Fenotipos_Susceptibles_2) <- "ID_AST_Susceptibles"
-  
-  IDs_Fenotipos_Susceptibles_3 <- cbind("Perfil" = Perfiles2$Perfil,
-                                        IDs_Fenotipos_Susceptibles_2)
-  
-  # crear una fila mas
-  IDs_Fenotipos_Susceptibles_3[nrow(IDs_Fenotipos_Susceptibles_3)+1,] <- "Total"
-  
-  # volver global
-  IDs_Fenotipos_Susceptibles <<- IDs_Fenotipos_Susceptibles_3
-  
   ######## crear data frame final ##########
+  rownames(IDs_Fenotipos_Resistentes) <- NULL
+  rownames(IDs_Fenotipos_Susceptibles) <- NULL
+  IDs_Fenotipos_Resistentes <<- IDs_Fenotipos_Resistentes 
+  IDs_Fenotipos_Susceptibles <<- IDs_Fenotipos_Susceptibles
+  
   # df intermedio AST
-  final_ASTs <- merge(AST_R,
-                      AST_S,
-                      by = "Perfil")
-  
-  # df final "ASTs con Genotipos Totales"
-  final_ASTs_GT <- merge(final_ASTs,
-                         Perfiles[, c("Perfil", "Genotipo_Total")],
-                         by = "Perfil")
-  
-  # df final IDs
   final_IDs <- merge(IDs_Fenotipos_Resistentes,
                      IDs_Fenotipos_Susceptibles,
                      by = "Perfil")
   
+  # volver global
+  final_IDs <<- final_IDs
+  
+  # df final "ASTs con Genotipos Totales"
+  Final <<- merge(ASTs_Perfiles,
+                  final_IDs,
+                  by = "Perfil")
+  
   # df Final
-  Final <- merge(final_ASTs_GT, final_IDs, by = "Perfil")
+  colnames(Final) <- c("Perfil",
+                       "AST_Resistentes",
+                       "AST_Sensibles",
+                       "No_Aislados",
+                       "ID_Resistentes",
+                       "ID_Sensibles")
+  
+  # agregar totales
+  Final <- as_tibble(Final)
+  Final[nrow(Final) + 1, "Perfil"] <- "Total"
+  
+  # obtener vector de sumas
+  sumas <- c(sum(Final$AST_Resistentes, na.rm = T),
+             sum(Final$AST_Sensibles, na.rm = T),
+             sum(Final$No_Aislados, na.rm = T))
+  Final <- data.frame(Final)
+  
+  # poblar df final con sumas totales
+  Final[nrow(Final), c("AST_Resistentes", "AST_Sensibles", "No_Aislados")] <- sumas
   
   # remover la palabra "Total"
-  Final[nrow(Final),c("ID_AST_Resistentes", "ID_AST_Susceptibles")] <- c(
+  Final[nrow(Final),c("ID_Resistentes", "ID_Sensibles")] <- c(
     especificidad,
     sensibilidad)
   
@@ -568,7 +674,6 @@ GenotipoCategorias <- function(archivo_genotipo) {
   Final_df <<- Final
   
   ########################### graficar df_final ############################
-  
   
   # subset de Final_df
   Final_df_corto <- Final_df[,c(1,2,3)]
@@ -595,4 +700,5 @@ GenotipoCategorias <- function(archivo_genotipo) {
     ggtitle(paste("Perfil de Genes de Aislados Resistentes y Sensibles por AST ", "(",Categoria, ")",sep = "")) +
     labs(y = "Conteo", x = "") +
     scale_fill_discrete(labels=c("AST Resistentes", "AST Sensibles"))
+  
 }
